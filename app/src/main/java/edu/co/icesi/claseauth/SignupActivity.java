@@ -8,14 +8,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.UUID;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,6 +37,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private TextView loginLink;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
+    private FirebaseAuth auth;
+
 
     //Path de la imagen de perfil
     private String path;
@@ -40,6 +50,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
+
 
         profileRegImage = findViewById(R.id.profileRegImage);
         nameET = findViewById(R.id.nameET);
@@ -63,6 +75,53 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.signupBtn:
+
+                //Si es exitoso nos deja logged
+                auth.createUserWithEmailAndPassword(
+                        emailET.getText().toString(),
+                        passwordET.getText().toString()
+                ).addOnSuccessListener(
+                        command -> {
+                            //Registrar los otros datos
+
+                            User user = new User(
+                                    auth.getCurrentUser().getUid(),
+                                    nameET.getText().toString(),
+                                    emailET.getText().toString(),
+                                    cityET.getText().toString()
+                            );
+
+                            try {
+                                FirebaseStorage.getInstance().getReference()
+                                        .child("profile")
+                                        .child(user.id)
+                                        .putStream(new FileInputStream(new File(path)))
+                                        .addOnSuccessListener(
+                                                command1 -> {
+                                                    db.collection("users").document(user.id)
+                                                            .set(user).addOnSuccessListener(
+                                                            dbaction ->{
+                                                                //Tanto el create del usuario y el registro de datos en db
+                                                                //Fue exitoso
+                                                                Intent i = new Intent(this, ProfileActivity.class);
+                                                                startActivity(i);
+                                                            }
+                                                    );
+                                                }
+                                        );
+
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                ).addOnFailureListener(
+                        command -> {
+                            Toast.makeText(this, command.getLocalizedMessage(), Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                );
+
+
 
                 break;
             case R.id.editProfileImage:

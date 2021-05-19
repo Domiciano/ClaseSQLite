@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -42,13 +46,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loginBtn.setOnClickListener(this);
         singupLink.setOnClickListener(this);
+
+
+
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginBtn:
-
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                        usernameET.getText().toString().trim(),
+                        passwordET.getText().toString().trim()
+                ).addOnSuccessListener(
+                        command -> {
+                            Intent i = new Intent(this, ProfileActivity.class);
+                            startActivity(i);
+                        }
+                ).addOnFailureListener(
+                        command -> {
+                            Toast.makeText(this, command.getLocalizedMessage(), Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                );
                 break;
 
             case R.id.signupLink:
