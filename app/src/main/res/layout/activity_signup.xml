@@ -22,13 +22,13 @@
                 android:id="@+id/nameET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="64dp"
                 android:ems="10"
                 android:hint="Nombre"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileRegImage" />
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <EditText
                 android:id="@+id/cityET"
@@ -111,26 +111,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/repasswordET" />
-
-            <ImageView
-                android:id="@+id/profileRegImage"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
-                android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_foreground"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <Button
-                android:id="@+id/editProfileImage"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/profileRegImage"
-                app:layout_constraintEnd_toEndOf="@+id/profileRegImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,7 +6,6 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button loginBtn;
     private EditText usernameET;
@@ -29,13 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-        }, 1);
-
+        setContentView(R.layout.activity_login);
 
         db = FirebaseFirestore.getInstance();
 
@@ -46,10 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loginBtn.setOnClickListener(this);
         singupLink.setOnClickListener(this);
-
-
-
-
     }
 
     @Override
@@ -65,10 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             startActivity(i);
                         }
                 ).addOnFailureListener(
-                        command -> {
-                            Toast.makeText(this, command.getLocalizedMessage(), Toast.LENGTH_LONG)
-                                    .show();
-                        }
+                        command -> Toast.makeText(this, command.getLocalizedMessage(), Toast.LENGTH_LONG).show()
                 );
                 break;
 

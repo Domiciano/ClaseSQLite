@@ -1,4 +1,4 @@
-package edu.co.icesi.claseauth;
+package edu.co.icesi.claseauth.data;
 
 public class User {
 
