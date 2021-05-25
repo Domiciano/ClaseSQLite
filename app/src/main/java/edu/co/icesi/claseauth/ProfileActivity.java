@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +49,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         db = FirebaseFirestore.getInstance();
 
 
-
         profileName = findViewById(R.id.profileName);
         signoutBtn = findViewById(R.id.signoutBtn);
         contactNameET = findViewById(R.id.contactNameET);
@@ -65,16 +65,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         syncBtn.setOnClickListener(this);
 
 
+
         //Saber si estamos logeados
         if (auth.getCurrentUser() == null) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
             finish();
-        }else{
-
+        } else {
+            db.collection("users")
+                    .document(auth.getCurrentUser().getUid())
+                    .get()
+                    .addOnSuccessListener(
+                            command -> {
+                                User user = command.toObject(User.class);
+                                Toast.makeText(this, "Bienvenido "+user.name, Toast.LENGTH_LONG).show();
+                            }
+                    );
         }
-
-
 
 
     }
@@ -84,9 +91,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.submitBtn:
-
-
-
 
 
                 break;
