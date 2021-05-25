@@ -54,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (fireuser == null) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
