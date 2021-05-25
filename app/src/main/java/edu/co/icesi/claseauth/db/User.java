@@ -1,11 +1,14 @@
 package edu.co.icesi.claseauth.db;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class User {
+
+    @NonNull
     @PrimaryKey
     public String id;
 
@@ -15,6 +18,6 @@ public class User {
     @ColumnInfo(name = "email")
     public String email;
 
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "city")
     public String city;
 }
