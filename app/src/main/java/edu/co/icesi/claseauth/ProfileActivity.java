@@ -16,6 +16,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.UUID;
+
+import edu.co.icesi.claseauth.data.Contact;
+import edu.co.icesi.claseauth.data.User;
+import edu.co.icesi.claseauth.db.AppDatabase;
+
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button signoutBtn;
@@ -28,10 +34,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button syncBtn;
     private TextView dbconsoleTV;
 
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+
 
         profileName = findViewById(R.id.profileName);
         signoutBtn = findViewById(R.id.signoutBtn);
@@ -50,12 +66,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
 
         //Saber si estamos logeados
-        FirebaseUser fireuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (fireuser == null) {
+        if (auth.getCurrentUser() == null) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
             finish();
+        }else{
+
         }
+
+
+
+
     }
 
     @Override
@@ -63,6 +84,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.submitBtn:
+
+
+
+
 
                 break;
 
