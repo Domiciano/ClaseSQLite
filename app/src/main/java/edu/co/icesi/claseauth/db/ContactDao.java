@@ -9,7 +9,7 @@ import java.util.List;
 public interface ContactDao {
 
     @Query("SELECT * FROM contacts WHERE userID = :userID")
-    List<UserDB> getAll(String userID);
+    List<ContactDB> getAll(String userID);
 
 }
 
