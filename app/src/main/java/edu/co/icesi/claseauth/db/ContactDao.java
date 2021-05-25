@@ -8,8 +8,6 @@ import java.util.List;
 @Dao
 public interface ContactDao {
 
-    @Query("SELECT * FROM contacts WHERE userID = :userID")
-    List<ContactDB> getAll(String userID);
 
 }
 
